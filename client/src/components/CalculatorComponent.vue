@@ -225,4 +225,15 @@ export default {
   grid-row: 4 / span 2;
   grid-column: 5 / 6;
 }
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .calc-wrapper {
+    width: 60%;
+  }
+
+  .post {
+    width: 100%;
+  }
+}
 </style>
