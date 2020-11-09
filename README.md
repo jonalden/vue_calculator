@@ -1,1 +1,1 @@
-# Take home calculator for Sezzle
+# vue_app
