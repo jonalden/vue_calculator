@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/index.js",
-    "dev": "nodemon server/index.js"
+    "dev": "nodemon server/index.js",
+    "deploy": "node scripts/gh-pages-deploy.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
     "vuetify": "^2.2.30"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "execa": "latest"
   }
 }
