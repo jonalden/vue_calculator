@@ -21,9 +21,7 @@
       <div @click="decimal('.')" class="button ">.</div>
       <div @click="modulus()" class="button operator modulus">%</div>
       <div @click="divide()" class="button operator">/</div>
-
       <div @click="calculateAndPost()" class="button operator equal">=</div>
-
     </div>
 
     <div class="post-container">
