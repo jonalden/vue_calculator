@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 router.post("/", async (req, res) => {
     const posts = await loadPostsCollection();
     await posts.insertOne({
-        text: req.body.text,
+        sum: req.body.sum,
         firstVal: req.body.firstVal,
         secondVal: req.body.secondVal,
         operator: req.body.operator,
