@@ -23,9 +23,6 @@ class PostService {
     }
 
     //CREATE post
-    // Edit to 3 arguments for num1, num2, operator
-    // Update collecton to save that data
-    //
     static insertPost(sum, operator, firstVal, secondVal) {
         return axios.post(url, {
             sum: sum,

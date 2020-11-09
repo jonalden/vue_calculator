@@ -2,11 +2,13 @@
   <div class="container">
 
     <div class="calc-wrapper">
-      <div class="display">{{ currentVal || 0}}</div>
+      <div v-if="showOperator === true" class="display">{{ operator }}</div>
+      <div v-if="showOperator === false" class="display">{{ currentVal || 0}}</div>
       <div @click="num('7')" class="button">7</div>
       <div @click="num('8')" class="button">8</div>
       <div @click="num('9')" class="button">9</div>
       <div @click="add()" class="button operator">+</div>
+      <div @click="clear()" class="button operator clear">C</div>
       <div @click="num('4')" class="button">4</div>
       <div @click="num('5')" class="button">5</div>
       <div @click="num('6')" class="button">6</div>
@@ -15,10 +17,13 @@
       <div @click="num('2')" class="button">2</div>
       <div @click="num('3')" class="button">3</div>
       <div @click="multiply()" class="button operator">*</div>
-      <div @click="num('0')" class="button">0</div>
-      <div @click="clear()" class="button clear">C</div>
-      <div @click="calculateAndPost()" class="button operator">=</div>
+      <div @click="num('0')" class="button ">0</div>
+      <div @click="decimal('.')" class="button ">.</div>
+      <div @click="modulus()" class="button operator modulus">%</div>
       <div @click="divide()" class="button operator">/</div>
+
+      <div @click="calculateAndPost()" class="button operator equal">=</div>
+
     </div>
 
     <div class="post-container">
@@ -29,8 +34,12 @@
            v-bind:key="post._id"
            v-on:dblclick="deletePost(post._id)">
         <div class="created-at">
-           {{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}
+           {{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}\n
+           ${post.createdAt.toLocaleTimeString()}` }}
         </div>
+        <!-- <div>
+          {{ `` }}
+        </div> -->
         <div>
            <p class="sum"> {{ `${post.firstVal} ${post.operator} ${post.secondVal} = ${post.sum}` }} </p>
         </div>
@@ -52,9 +61,10 @@ export default {
       sum: "",
       previousVal: '',
       currentVal: '',
-      operator: null,
+      operator: '',
       operation: null,
-      operatorSelected: false
+      operatorSelected: false,
+      showOperator: false
     }
   },
   async created() {
@@ -69,6 +79,7 @@ export default {
       if (this.operatorSelected) {
         this.currentVal = '';
         this.operatorSelected = false;
+        this.showOperator = false;
       }
       this.currentVal = `${this.currentVal}${num}`;
       console.log(this.currentVal);
@@ -76,11 +87,13 @@ export default {
     clear() {
       this.currentVal = '';
       this.previousVal = '';
-      this.operatorSelected = false;
+      this.operator = '';
     },
     setPreviousVal() {
       this.previousVal = this.currentVal;
       this.operatorSelected = true;
+      this.currentVal = '';
+      this.showOperator = true;
     },
     add() {
       this.operation = (num1, num2) => num1 + num2;
@@ -101,6 +114,16 @@ export default {
       this.operation = (num1, num2) => num1 / num2;
       this.setPreviousVal();
       this.operator = "/";
+    },
+    modulus() {
+      this.operation = (num1, num2) => num1 % num2;
+      this.setPreviousVal();
+      this.operator = "%";
+    },
+    decimal() {
+      if(this.currentVal.indexOf('.') === -1){
+        this.num('.')
+      }
     },
     async calculateAndPost() {
       let secondVal = this.currentVal;
@@ -150,6 +173,7 @@ export default {
   background-color: rgb(168, 147, 194);
   color: white;
   font-size: 13px;
+  white-space: pre;
 }
 
 .sum {
@@ -161,17 +185,17 @@ export default {
 
 .calc-wrapper {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-auto-rows: minmax(75px, auto);
   margin: 0 auto 50px;
-  width: 30%;
+  width: 35%;
   grid-gap: 2px;
 }
 
 .display {
   background: rgb(168, 147, 194);
   color: white;
-  grid-column: 1 / 5;
+  grid-column: 1 / 6;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -195,6 +219,12 @@ export default {
 }
 
 .clear {
-  color: lightcoral;
+  grid-row: 2 / span 2;
+  grid-column: 5 / 6;
+}
+
+.equal {
+  grid-row: 4 / span 2;
+  grid-column: 5 / 6;
 }
 </style>
