@@ -1,0 +1,53 @@
+0 info it worked if it ends with ok
+1 verbose cli [
+1 verbose cli   '/Users/jonalden/.nvm/versions/node/v12.0.0/bin/node',
+1 verbose cli   '/Users/jonalden/projects/vue_calculator/node_modules/.bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'build'
+1 verbose cli ]
+2 info using npm@2.15.12
+3 info using node@v12.0.0
+4 warn invalid config loglevel="notice"
+5 verbose stack Error: Cannot find module 'json-schema'
+5 verbose stack Require stack:
+5 verbose stack - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/request/node_modules/http-signature/node_modules/jsprim/lib/jsprim.js
+5 verbose stack - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/request/node_modules/http-signature/lib/signer.js
+5 verbose stack - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/request/node_modules/http-signature/lib/index.js
+5 verbose stack - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/request/request.js
+5 verbose stack - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/request/index.js
+5 verbose stack - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/npm-registry-client/lib/fetch.js
+5 verbose stack - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/npm-registry-client/index.js
+5 verbose stack - /Users/jonalden/projects/vue_calculator/node_modules/npm/lib/cache/caching-client.js
+5 verbose stack - /Users/jonalden/projects/vue_calculator/node_modules/npm/lib/npm.js
+5 verbose stack - /Users/jonalden/projects/vue_calculator/node_modules/npm/bin/npm-cli.js
+5 verbose stack     at Function.Module._resolveFilename (internal/modules/cjs/loader.js:610:15)
+5 verbose stack     at Function.Module._load (internal/modules/cjs/loader.js:526:27)
+5 verbose stack     at Module.require (internal/modules/cjs/loader.js:666:19)
+5 verbose stack     at require (internal/modules/cjs/helpers.js:16:16)
+5 verbose stack     at Object.<anonymous> (/Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/request/node_modules/http-signature/node_modules/jsprim/lib/jsprim.js:10:22)
+5 verbose stack     at Module._compile (internal/modules/cjs/loader.js:759:30)
+5 verbose stack     at Object.Module._extensions..js (internal/modules/cjs/loader.js:770:10)
+5 verbose stack     at Module.load (internal/modules/cjs/loader.js:628:32)
+5 verbose stack     at Function.Module._load (internal/modules/cjs/loader.js:555:12)
+5 verbose stack     at Module.require (internal/modules/cjs/loader.js:666:19)
+6 verbose cwd /Users/jonalden/projects/vue_calculator
+7 error Darwin 19.3.0
+8 error argv "/Users/jonalden/.nvm/versions/node/v12.0.0/bin/node" "/Users/jonalden/projects/vue_calculator/node_modules/.bin/npm" "run" "build"
+9 error node v12.0.0
+10 error npm  v2.15.12
+11 error code MODULE_NOT_FOUND
+12 error Cannot find module 'json-schema'
+12 error Require stack:
+12 error - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/request/node_modules/http-signature/node_modules/jsprim/lib/jsprim.js
+12 error - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/request/node_modules/http-signature/lib/signer.js
+12 error - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/request/node_modules/http-signature/lib/index.js
+12 error - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/request/request.js
+12 error - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/request/index.js
+12 error - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/npm-registry-client/lib/fetch.js
+12 error - /Users/jonalden/projects/vue_calculator/node_modules/npm/node_modules/npm-registry-client/index.js
+12 error - /Users/jonalden/projects/vue_calculator/node_modules/npm/lib/cache/caching-client.js
+12 error - /Users/jonalden/projects/vue_calculator/node_modules/npm/lib/npm.js
+12 error - /Users/jonalden/projects/vue_calculator/node_modules/npm/bin/npm-cli.js
+13 error If you need help, you may report this error at:
+13 error     <https://github.com/npm/npm/issues>
+14 verbose exit [ 1, true ]
