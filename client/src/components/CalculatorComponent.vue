@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-
     <div class="calc-wrapper">
       <div v-if="showOperator === true" class="display">{{ operator }}</div>
-      <div v-if="showOperator === false" class="display">{{ currentVal || 0}}</div>
+      <div v-if="showOperator === false" class="display">
+        {{ currentVal || 0 }}
+      </div>
       <div @click="num('7')" class="button">7</div>
       <div @click="num('8')" class="button">8</div>
       <div @click="num('9')" class="button">9</div>
@@ -24,22 +25,22 @@
       <div @click="calculateAndPost()" class="button operator equal">=</div>
     </div>
 
+    <!-- Looping through the equations returned from the GET -->
     <div class="post-container">
-      <div class="post"
-           v-for="(post, index) in posts"
-           v-bind:item="post"
-           v-bind:index="index"
-           v-bind:key="post._id"
-           v-on:dblclick="deletePost(post._id)">
-        <div class="created-at">
-           {{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}\n
-           ${post.createdAt.toLocaleTimeString()}` }}
-        </div>
-        <!-- <div>
-          {{ `` }}
-        </div> -->
+      <div
+        class="post"
+        v-for="(post, index) in posts"
+        v-bind:item="post"
+        v-bind:index="index"
+        v-bind:key="post._id"
+        v-on:dblclick="deletePost(post._id)"
+      >
         <div>
-           <p class="sum"> {{ `${post.firstVal} ${post.operator} ${post.secondVal} = ${post.sum}` }} </p>
+          <p class="sum">
+            {{
+              `${post.firstVal} ${post.operator} ${post.secondVal} = ${post.sum}`
+            }}
+          </p>
         </div>
       </div>
     </div>
@@ -47,27 +48,35 @@
 </template>
 
 <script>
-
 import PostService from "../PostService";
 
 export default {
-  name: 'CalculatorComponent',
+  name: "CalculatorComponent",
   props: {},
   data() {
     return {
       posts: [],
       sum: "",
-      previousVal: '',
-      currentVal: '',
-      operator: '',
+      previousVal: "",
+      currentVal: "",
+      operator: "",
       operation: null,
       operatorSelected: false,
-      showOperator: false
-    }
+      showOperator: false,
+    };
   },
+
+  /*
+  	 I am fully aware of the extremely hacky nature of this set interval. I started to implement a websocket
+	 framework, socket.io, but I misjudged the amount of time it would take to learn the new technology. Please
+	 understand I would never dream of this in Production.
+  */
   async created() {
     try {
-      this.posts = await PostService.getPosts();
+      setInterval(
+        async () => (this.posts = await PostService.getPosts()),
+        2000
+      );
     } catch (err) {
       this.err = err.message;
     }
@@ -75,7 +84,7 @@ export default {
   methods: {
     num(num) {
       if (this.operatorSelected) {
-        this.currentVal = '';
+        this.currentVal = "";
         this.operatorSelected = false;
         this.showOperator = false;
       }
@@ -83,30 +92,30 @@ export default {
       console.log(this.currentVal);
     },
     clear() {
-      this.currentVal = '';
-      this.previousVal = '';
-      this.operator = '';
+      this.currentVal = "";
+      this.previousVal = "";
+      this.operator = "";
     },
     setPreviousVal() {
       this.previousVal = this.currentVal;
       this.operatorSelected = true;
-      this.currentVal = '';
+      this.currentVal = "";
       this.showOperator = true;
     },
     add() {
       this.operation = (num1, num2) => num1 + num2;
       this.setPreviousVal();
-      this.operator = '+';
+      this.operator = "+";
     },
     subtract() {
       this.operation = (num1, num2) => num1 - num2;
       this.setPreviousVal();
-      this.operator = '-';
+      this.operator = "-";
     },
     multiply() {
       this.operation = (num1, num2) => num1 * num2;
       this.setPreviousVal();
-      this.operator = '*';
+      this.operator = "*";
     },
     divide() {
       this.operation = (num1, num2) => num1 / num2;
@@ -119,8 +128,8 @@ export default {
       this.operator = "%";
     },
     decimal() {
-      if(this.currentVal.indexOf('.') === -1){
-        this.num('.')
+      if (this.currentVal.indexOf(".") === -1) {
+        this.num(".");
       }
     },
     async calculateAndPost() {
@@ -128,27 +137,29 @@ export default {
       this.currentVal = `${this.operation(
         parseFloat(this.previousVal),
         parseFloat(this.currentVal)
-        )}`;
-      if(this.currentVal && this.previousVal && this.operator && secondVal) {
-        await PostService.insertPost(this.currentVal, this.operator, this.previousVal, secondVal);
-      this.posts = await PostService.getPosts();
+      )}`;
+      if (this.currentVal && this.previousVal && this.operator && secondVal) {
+        await PostService.insertPost(
+          this.currentVal,
+          this.operator,
+          this.previousVal,
+          secondVal
+        );
+        this.posts = await PostService.getPosts();
       } else {
         alert("You must enter an appropriate operation");
         this.clear();
       }
-
     },
     async deletePost(id) {
       await PostService.deletePost(id);
       this.posts = await PostService.getPosts();
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .container {
   max-width: 800px;
   margin: 0 auto;
@@ -157,21 +168,9 @@ export default {
 
 .post {
   position: relative;
-  background-color:rgb(168, 147, 194);
+  background-color: rgb(168, 147, 194);
   padding: 10px 10px 30px 10px;
   margin-bottom: 15px;
-}
-
-.created-at {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 1em;
-  padding: 5px 15px 5px 15px;
-  background-color: rgb(168, 147, 194);
-  color: white;
-  font-size: 13px;
-  white-space: pre;
 }
 
 .sum {
@@ -226,8 +225,8 @@ export default {
   grid-column: 5 / 6;
 }
 
+/* For mobile phones: */
 @media only screen and (max-width: 768px) {
-  /* For mobile phones: */
   .calc-wrapper {
     width: 60%;
   }
